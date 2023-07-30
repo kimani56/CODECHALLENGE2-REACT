@@ -1,25 +1,88 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import BotCollection from './components/BotCollection';
+import YourBotArmy from './components/YourBotArmy';
+import SortBar from './components/SortBar';
+import BotFilter from './components/BotFilter';
+import axios from 'axios';
 
-function App() {
+const App = () => {
+  const [allBots, setAllBots] = useState([]);
+  const [yourBotArmy, setYourBotArmy] = useState([]);
+  const [sortedBy, setSortedBy] = useState('health'); // State for sorting
+  const [selectedClasses, setSelectedClasses] = useState([]); // State for selected bot classes
+
+  useEffect(() => {
+    fetchBots();
+  }, []);
+
+  const fetchBots = async () => {
+    try {
+      const response = await axios.get('http://localhost:8001/bots');
+      setAllBots(response.data);
+    } catch (error) {
+      console.error('Error fetching bots:', error);
+    }
+  };
+
+  const handleEnlistBot = (bot) => {
+    if (!yourBotArmy.includes(bot)) {
+      setYourBotArmy([...yourBotArmy, bot]);
+    }
+  };
+
+  const handleReleaseBot = (bot) => {
+    setYourBotArmy(yourBotArmy.filter((b) => b !== bot));
+  };
+
+  const handleDischargeBot = async (bot) => {
+    try {
+      await axios.delete(`http://localhost:8001/bots/${bot.id}`);
+      setAllBots(allBots.filter((b) => b !== bot));
+      setYourBotArmy(yourBotArmy.filter((b) => b !== bot));
+    } catch (error) {
+      console.error('Error discharging bot:', error);
+    }
+  };
+
+  const handleFilterAndSort = () => {
+    const filteredBots = allBots.filter((bot) => {
+      // If no classes are selected, show all bots
+      if (selectedClasses.length === 0) {
+        return true;
+      }
+      // Show bots of selected classes only
+      return selectedClasses.includes(bot.bot_class);
+    });
+
+    return filteredBots.sort((a, b) => b[sortedBy] - a[sortedBy]);
+  };
+
+  const handleSortChange = (value) => {
+    setSortedBy(value);
+  };
+
+  const handleFilterChange = (checked, botClass) => {
+    if (checked) {
+      setSelectedClasses([...selectedClasses, botClass]);
+    } else {
+      setSelectedClasses(selectedClasses.filter((cls) => cls !== botClass));
+    }
+  };
+
+  // Call handleFilterAndSort to get the sorted and filtered bots
+  const sortedAndFilteredBots = handleFilterAndSort();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Available Bots</h1>
+      <SortBar onSortChange={handleSortChange} />
+      <BotFilter botClasses={['Support', 'Medic', 'Assault', 'Defender', 'Captain', 'Witch']} onFilterChange={handleFilterChange} />
+      <BotCollection bots={sortedAndFilteredBots} onEnlistBot={handleEnlistBot} />
+      <h1>Your Bot Army</h1>
+      <YourBotArmy bots={yourBotArmy} onReleaseBot={handleReleaseBot} onDischargeBot={handleDischargeBot} />
     </div>
   );
-}
+};
 
 export default App;
