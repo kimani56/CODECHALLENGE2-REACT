@@ -82,7 +82,7 @@ const App = () => {
       <h1>Your Bot Army</h1>
       <YourBotArmy bots={yourBotArmy} onReleaseBot={handleReleaseBot} onDischargeBot={handleDischargeBot} />
     </div>
-  );
+  );  
 };
 
 export default App;
