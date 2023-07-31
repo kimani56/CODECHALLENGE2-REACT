@@ -33,7 +33,7 @@ Setup
 To run the Bot Battlr application on your local machine, follow these steps:
 
 Clone the repository:
-git clone https://github.com/your-username/bot-battlr.git
+git clone https://github.com/kimani56/CODECHALLENGE2-REACT.git
 
 Navigate to the project directory:
 cd bot-battlr
