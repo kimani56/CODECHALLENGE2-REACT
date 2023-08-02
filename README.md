@@ -44,6 +44,19 @@ npm install
 Start the development server:
 npm start
 
+HOW TO USE
+On the homepage, you will see a list of bots available for enlistment.
+Click the "Enlist" button on any bot card to add it to your bot army. You can enlist a bot only once.
+Once enlisted, the bot will appear in the "Your Bot Army" section.
+Click the "Release" button on any bot card in your bot army to remove it from your army.
+Click the  "x" button on any bot card in your bot army to discharge (delete) it forever from both your army and the backend.
+Use the "Sort By" dropdown to sort the bots in the list by health, damage, or armor.
+Use the checkboxes in the "Filter By Class" section to filter the bots by their class. You can select multiple classes at once.
+
+Credits
+The Bot Battlr application was created as a practice project by Gift Kimani. It uses React for the frontend and Axios to fetch data from the backend API.
+
+
 
 author
 Gift Kimani
