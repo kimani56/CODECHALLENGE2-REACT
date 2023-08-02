@@ -18,7 +18,7 @@ const App = () => {
 
   const fetchBots = async () => {
     try {
-      const response = await axios.get('http://localhost:8001/bots');
+      const response = await axios.get('https://bot-battlr-rzj4.onrender.com/bots');
       setAllBots(response.data);
     } catch (error) {
       console.error('Error fetching bots:', error);
@@ -47,11 +47,11 @@ const App = () => {
 
   const handleFilterAndSort = () => {
     const filteredBots = allBots.filter((bot) => {
-      // If no classes are selected, show all bots
+     
       if (selectedClasses.length === 0) {
         return true;
       }
-      // Show bots of selected classes only
+      
       return selectedClasses.includes(bot.bot_class);
     });
 
@@ -70,7 +70,7 @@ const App = () => {
     }
   };
 
-  // Call handleFilterAndSort to get the sorted and filtered bots
+
   const sortedAndFilteredBots = handleFilterAndSort();
 
   return (
