@@ -56,7 +56,14 @@ Use the checkboxes in the "Filter By Class" section to filter the bots by their 
 Credits
 The Bot Battlr application was created as a practice project by Gift Kimani. It uses React for the frontend and Axios to fetch data from the backend API.
 
+Contributing
+If you'd like to contribute to the project or report issues, feel free to submit a pull request or open an issue on the GitHub repository.
 
+License
+The project is distributed under the MIT License.
+
+Contact
+giftkimani86@gmail.com
 
 author
 Gift Kimani
